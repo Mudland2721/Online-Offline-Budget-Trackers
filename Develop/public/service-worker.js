@@ -2,8 +2,7 @@ console.log(`HERE WE GOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO`);
 
 const FILES_TO_CACHE = [
   //want icons and manifest cached and ready
-  "/api/transaction",
-  "/api/transaction/bulk",
+  "/index.html",
   "/icons/icon-192x192.png",
   "/icons/icon-512x512.png",
   "manifest.webmanifest",
