@@ -6,8 +6,7 @@ let db;
 
 const request = indexedDB.open("budget", 1);
 
-//23, 21
-//mongoose onupgradeneeded
+window.addeventlistener("online", checkDatabase);
 
 // google notes for what it does
 request.onupgradeneeded = function ({ target }) {
@@ -54,6 +53,7 @@ function checkDatabase() {
         },
       })
         .then((res) => {
+          // console.log(res);
           return res.json;
         })
         .then(() => {
@@ -61,11 +61,11 @@ function checkDatabase() {
           const store = transaction.objectStore("pending");
           store.clear();
         });
-    }
+    // } if (method === "post") {
+    //   store.put()
+    // }
   };
 }
-
-window.addeventlistener("online", checkDatabase());
 
 //last things missing ===> three more functions
 
