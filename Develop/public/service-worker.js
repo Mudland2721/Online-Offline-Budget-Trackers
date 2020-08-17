@@ -22,29 +22,29 @@ self.addEventListener("install", function (evt) {
       return cache.addAll(FILES_TO_CACHE);
     })
   );
-  self.skipWaiting();
+  // self.skipWaiting();
 });
 //install evt list ============= end
 
 //active evt list ============= start
-self.addEventListener("active", function (evt) {
-  evt.waitUntil(
-    caches.keys().then((keyList) => {
-      return Promise.all(
-        keyList.map((key) => {
-          // if key inst V1 and V2 delete it
-          if (key === CACHE_NAME && key !== DATA_CACHE_NAME) {
-            console.log("Removed old cache data", key);
-            return caches.delete(key);
-          }
-        })
-      );
-    })
-  );
+// self.addEventListener("active", function (evt) {
+//   evt.waitUntil(
+//     caches.keys().then((keyList) => {
+//       return Promise.all(
+//         keyList.map((key) => {
+//           // if key inst V1 and V2 delete it
+//           if (key === CACHE_NAME && key !== DATA_CACHE_NAME) {
+//             console.log("Removed old cache data", key);
+//             return caches.delete(key);
+//           }
+//         })
+//       );
+//     })
+//   );
 
-  // be sure serviceWorker is running correctly
-  self.ClientRectList.claim();
-});
+//   // be sure serviceWorker is running correctly
+//   self.ClientRectList.claim();
+// });
 //active evt list ============= end
 
 //fetch evt list ============= start

@@ -1,12 +1,11 @@
-const { all } = require("../routes/api");
+console.log("db.js loaded");
+// const { all } = require("../routes/api");
 
 const indexedDB = window.indexedDB;
 
 let db;
-
+console.log("db before open budget");
 const request = indexedDB.open("budget", 1);
-
-window.addeventlistener("online", checkDatabase);
 
 // google notes for what it does
 request.onupgradeneeded = function ({ target }) {
@@ -31,14 +30,15 @@ request.onerror = function (event) {
 };
 
 function saveRecord(record) {
-  const transaction = db.transaction(["pending"], "readwrite");
+  console.log("---> ", record);
+  const transaction = db.transaction(["pending"], "readWrite");
   const store = transaction.objectStore("pending");
 
   store.add(record);
 }
 
 function checkDatabase() {
-  const transaction = db.transaction(["pending"], "readwrite");
+  const transaction = db.transaction(["pending"], "readWrite");
   const store = transaction.objectStore("pending");
   const getAll = store.getAll();
 
@@ -57,51 +57,13 @@ function checkDatabase() {
           return res.json;
         })
         .then(() => {
-          const transaction = db.transaction(["pending"], "readwrite");
+          const transaction = db.transaction(["pending"], "readWrite");
           const store = transaction.objectStore("pending");
           store.clear();
+          location.reload();
         });
-    // } if (method === "post") {
-    //   store.put()
-    // }
+    }
   };
 }
-
-//last things missing ===> three more functions
-
-//savRecord (passing param or record)
-//transaction varible
-//store varible
-//what am i returning (set store varilbe) store.add(record);
-
-// checkDatabasze (called on 23) run before we make db connection
-
-//check 3 var
-//transaction ===> async db.transaction({"pending"}) [array, "readWrite")]
-
-//store is the same as save record (transaction.objectStore("pending"))
-
-// const = getAll() ===> store.getAll(); (still in check db function)
-
-// call 3 vars (getAll.onsuccess = (dummy fucnton) function() {
-// if (getAll.result.length > 0) {
-// then do a fetch("api/transaction/bulk", {
-// method: post, next is body: jsonSTRINGIFY(getAll.result)
-//headers({accept json format})
-// }
-
-//.then((res) => {
-//return res.json()
-// })
-//.then(() => {
-//checking to see if the records have been deleted
-//transaction ===> async db.transaction({"pending"}) [array, "readWrite")]
-//store is the same as save record (transaction.objectStore("pending"))
-//DONT FORGET STORE.CLEARALL()
-// })
-// )
-// }
-// } )
-
-//listen for the app to come online once they come back online
-//window.addeventlistener("online", checkDatabase())
+// listen for app coming back online
+window.addEventListener("online", checkDatabase);
