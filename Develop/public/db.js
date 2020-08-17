@@ -1,30 +1,22 @@
-console.log("db.js loaded");
-// const { all } = require("../routes/api");
-
 const indexedDB = window.indexedDB;
 
 let db;
 console.log("db before open budget");
 const request = indexedDB.open("budget", 1);
 
-// google notes for what it does
 request.onupgradeneeded = function ({ target }) {
   let db = target.result;
   db.createObjectStore("pending", { autoIncrement: true });
 };
 
-// google notes for what it does
 request.onsuccess = function ({ target }) {
   db = target.result;
-
-  //need to check to see if app is online ===> before reaching out to db (if statement)
 
   if (navigator.onLine) {
     checkDatabase();
   }
 };
 
-// google notes for what it does
 request.onerror = function (event) {
   console.log("There was an error");
 };
@@ -53,7 +45,6 @@ function checkDatabase() {
         },
       })
         .then((res) => {
-          // console.log(res);
           return res.json;
         })
         .then(() => {
@@ -65,5 +56,4 @@ function checkDatabase() {
     }
   };
 }
-// listen for app coming back online
 window.addEventListener("online", checkDatabase);
